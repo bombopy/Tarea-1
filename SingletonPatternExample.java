@@ -1,16 +1,16 @@
 // Clase Singleton para el gestor del juego
-class GameManager {
-    private static GameManager instance;
+class GameSession {
+    private static GameSession instance;
 
-    // Constructor privado para evitar instancias externas
-    private GameManager() {
-        System.out.println("Gestor del juego inicializado");
+    
+    private GameSession() {
+        System.out.println("Nueva sesion de juego creada");
     }
 
     // Método para obtener la única instancia
-    public static synchronized GameManager getInstance() {
+    public static synchronized GameSession getInstance() {
         if (instance == null) {
-            instance = new GameManager();
+            instance = new GameSession();
         }
         return instance;
     }
@@ -25,11 +25,11 @@ class GameManager {
 public class SingletonPatternExample {
     public static void main(String[] args) {
         // Obtener la única instancia del gestor del juego
-        GameManager manager = GameManager.getInstance();
+        GameSession manager = GameSession.getInstance();
         manager.startGame();
 
         // Comprobar que siempre es la misma instancia
-        GameManager manager2 = GameManager.getInstance();
+        GameSession manager2 = GameSession.getInstance();
         System.out.println("¿Es la misma instancia? " + (manager == manager2));
     }
 }

@@ -29,6 +29,44 @@ class GameSession {
 }
 
 // ==================== PATRON STRATEGY ====================
+// Estrategias de movimiento
+interface MovementStrategy {
+    void move();
+}
+
+class LinearMovement implements MovementStrategy {
+    @Override
+    public void move() {
+        System.out.println("Movimiento lineal descendente");
+    }
+}
+
+class ZigzagMovement implements MovementStrategy {
+    @Override
+    public void move() {
+        System.out.println("Movimiento zigzag");
+    }
+}
+
+// Estrategias de disparo
+interface ShootingStrategy {
+    void shoot();
+}
+
+class SingleShot implements ShootingStrategy {
+    @Override
+    public void shoot() {
+        System.out.println("Disparo simple");
+    }
+}
+
+class TripleShot implements ShootingStrategy {
+    @Override
+    public void shoot() {
+        System.out.println("Disparo triple");
+    }
+}
+
 // Estrategias de disparo
 interface WeaponStrategy {
     void fire();
@@ -78,6 +116,8 @@ class PlayerShip {
 abstract class Invader {
     protected String type;
     protected int points;
+    protected MovementStrategy movementStrategy;
+    protected ShootingStrategy shootingStrategy;
     
     public Invader(String type, int points) {
         this.type = type;
@@ -93,53 +133,85 @@ abstract class Invader {
     }
     
     public String getType() { return type; }
+    
+    public void setMovementStrategy(MovementStrategy strategy) {
+        this.movementStrategy = strategy;
+    }
+    
+    public void setShootingStrategy(ShootingStrategy strategy) {
+        this.shootingStrategy = strategy;
+    }
 }
 
 class SmallInvader extends Invader {
     public SmallInvader() {
         super("Invasor Pequeno", 10);
+        this.movementStrategy = new LinearMovement();
+        this.shootingStrategy = new SingleShot();
     }
     
     @Override
     public void attack() {
         System.out.println(type + " dispara bala simple");
+        if (shootingStrategy != null) {
+            shootingStrategy.shoot();
+        }
     }
     
     @Override
     public void move() {
         System.out.println(type + " se mueve lentamente");
+        if (movementStrategy != null) {
+            movementStrategy.move();
+        }
     }
 }
 
 class MediumInvader extends Invader {
     public MediumInvader() {
         super("Invasor Mediano", 20);
+        this.movementStrategy = new ZigzagMovement();
+        this.shootingStrategy = new SingleShot();
     }
     
     @Override
     public void attack() {
         System.out.println(type + " dispara doble bala");
+        if (shootingStrategy != null) {
+            shootingStrategy.shoot();
+        }
     }
     
     @Override
     public void move() {
         System.out.println(type + " se mueve moderadamente");
+        if (movementStrategy != null) {
+            movementStrategy.move();
+        }
     }
 }
 
 class LargeInvader extends Invader {
     public LargeInvader() {
         super("Invasor Grande", 50);
+        this.movementStrategy = new ZigzagMovement();
+        this.shootingStrategy = new TripleShot();
     }
     
     @Override
     public void attack() {
         System.out.println(type + " dispara misiles");
+        if (shootingStrategy != null) {
+            shootingStrategy.shoot();
+        }
     }
     
     @Override
     public void move() {
         System.out.println(type + " se mueve rapidamente");
+        if (movementStrategy != null) {
+            movementStrategy.move();
+        }
     }
 }
 
@@ -195,6 +267,24 @@ public class SpaceInvadersClean {
         player.setWeapon(new SpreadShot());
         player.shoot();
         
+        // Demostrar estrategias de movimiento y disparo
+        System.out.println("\nEstrategias de movimiento y disparo:");
+        System.out.println("Estrategia lineal:");
+        MovementStrategy linear = new LinearMovement();
+        linear.move();
+        
+        System.out.println("Estrategia zigzag:");
+        MovementStrategy zigzag = new ZigzagMovement();
+        zigzag.move();
+        
+        System.out.println("Disparo simple:");
+        ShootingStrategy single = new SingleShot();
+        single.shoot();
+        
+        System.out.println("Disparo triple:");
+        ShootingStrategy triple = new TripleShot();
+        triple.shoot();
+        
         // FACTORY: Crear diferentes enemigos
         System.out.println("\nPATRON FACTORY:");
         System.out.println("---------------");
@@ -246,8 +336,8 @@ public class SpaceInvadersClean {
         
         System.out.println("\nPATRONES DEMOSTRADOS:");
         System.out.println("- SINGLETON: GameSession como instancia unica");
-        System.out.println("- STRATEGY: Diferentes estrategias de armas");
-        System.out.println("- FACTORY: Creacion flexible de enemigos");
+        System.out.println("- STRATEGY: WeaponStrategy, MovementStrategy, ShootingStrategy");
+        System.out.println("- FACTORY: InvaderFactory para creacion flexible de enemigos");
         
         System.out.println("\n========================================");
         System.out.println("Demostracion completada exitosamente!");

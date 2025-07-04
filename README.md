@@ -163,25 +163,6 @@ Nivel final: 6
 - **Consistencia:** Estado del juego coherente
 - **Escalabilidad:** Fácil agregar nuevos niveles y enemigos
 
-## EXTENSIONES
-
-### Estrategias
-
-- `TeleportMovementStrategy`: Enemigos que se teletransportan
-- `HomingMissileStrategy`: Disparos que siguen al jugador
-- `ShieldStrategy`: Enemigos con escudos
-
-### Tipos
-
-- `BossFactory`: Crear jefes de nivel únicos
-- `PowerUpFactory`: Crear power-ups especiales
-- `WeaponUpgradeFactory`: Crear mejoras de armas
-
-### Singletons
-
-- `AudioManager`: Gestor de sonidos
-- `ConfigManager`: Gestor de configuración
-- `SaveGameManager`: Gestor de guardado
 
 ## RECURSOS
 
